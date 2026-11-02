@@ -20,6 +20,7 @@ Toda cuenta nueva es `operador`. El rol `admin` solo lo crea `npm run seed`.
 
 ```
 finca-lotes/
+├── api/index.js            # Punto de entrada en Vercel
 ├── backend/
 │   ├── src/
 │   │   ├── config/         # Variables de entorno (env.js) y conexión a MongoDB (db.js)
@@ -42,14 +43,15 @@ finca-lotes/
 │   ├── finca-lotes.postman_collection.json
 │   └── capturas/
 ├── .env.example            # Plantilla de variables de entorno
-└── render.yaml             # Despliegue en Render
+├── vercel.json             # Despliegue en Vercel
+└── render.yaml             # Alternativa: despliegue en Render
 ```
 
 Una petición recorre: `routes` → `middleware` (autenticación y validación) → `controllers` → `models` → MongoDB. Cualquier error llega a `middleware/errores.js`, que responde siempre con JSON. Express también sirve la carpeta `frontend/`, así que todo corre en un solo servidor.
 
 ## Cómo ejecutarlo en local
 
-Requiere Node.js 20 o superior.
+Requiere Node.js 22.
 
 ```bash
 npm install
@@ -76,13 +78,15 @@ npm run dev     # http://localhost:3000
 npm test        # Pruebas de la API (usan una base de datos temporal, no la tuya)
 ```
 
-## Despliegue en la nube (Render + MongoDB Atlas)
+## Despliegue en la nube (Vercel + MongoDB Atlas)
 
-1. **Atlas:** crea un clúster gratuito M0 y un usuario de base de datos. En *Network Access* permite `0.0.0.0/0`, porque las IP de salida de Render cambian. Copia la cadena de conexión y agrega el nombre de la base: `mongodb+srv://USUARIO:CLAVE@cluster.mongodb.net/finca_lotes`.
-2. **Render:** *New → Blueprint*, elige este repositorio (usa `render.yaml`) y pega la cadena en `MONGODB_URI`. `JWT_SECRET` se genera solo.
+1. **Atlas:** crea un clúster gratuito M0 y un usuario de base de datos. En *Network Access* permite `0.0.0.0/0`, porque las IP de salida de Vercel cambian. Copia la cadena de conexión y agrega el nombre de la base: `mongodb+srv://USUARIO:CLAVE@cluster.mongodb.net/finca_lotes`.
+2. **Vercel:** *Add New → Project*, importa este repositorio y, antes de desplegar, agrega las variables `MONGODB_URI` (la cadena de Atlas) y `JWT_SECRET` (genérala con el comando de arriba). `vercel.json` y `api/index.js` hacen el resto.
 3. **Datos iniciales:** en tu computadora, apunta `MONGODB_URI` de tu `.env` a Atlas y corre `npm run seed`. Elige para `ADMIN_PASSWORD` una contraseña larga, porque esa cuenta quedará en internet.
 
-El plan gratuito de Render apaga el servicio tras 15 minutos sin uso; la primera petición después de eso puede tardar cerca de un minuto.
+En Vercel la app corre como función bajo demanda: `api/index.js` reemplaza a `server.js`. El límite de intentos de inicio de sesión se cuenta por instancia, así que allí es menos estricto que en un servidor único.
+
+`render.yaml` queda como alternativa para desplegar en Render (*New → Blueprint*).
 
 ## Documentación de la API
 
