@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 460">
+  <defs>
+    <linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2c9a8"/>
+      <stop offset="1" stop-color="#f7f1e6"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="460" fill="url(#cielo)"/>
+  <circle cx="430" cy="130" r="55" fill="#e8a46b"/>
+  <path d="M0 230 L120 120 L210 200 L320 90 L450 210 L600 120 L600 460 L0 460 Z" fill="#7d9a7f"/>
+  <rect x="0" y="190" width="600" height="40" fill="#f7f1e6" opacity="0.55"/>
+  <path d="M0 290 L90 210 L200 270 L330 180 L470 270 L600 220 L600 460 L0 460 Z" fill="#4f7a57"/>
+  <rect x="0" y="255" width="600" height="30" fill="#f7f1e6" opacity="0.45"/>
+  <path d="M0 340 Q150 290 300 330 T600 320 L600 460 L0 460 Z" fill="#2f5d3a"/>
+  <!-- árboles de sombra -->
+  <g fill="#1f3f27">
+    <rect x="96" y="250" width="8" height="60"/><circle cx="100" cy="240" r="34"/>
+    <rect x="486" y="240" width="8" height="70"/><circle cx="490" cy="228" r="40"/>
+    <rect x="300" y="262" width="7" height="50"/><circle cx="303" cy="252" r="28"/>
+  </g>
+  <!-- hileras de cafetos -->
+  <g fill="#1f3f27">
+    <ellipse cx="60" cy="380" rx="34" ry="22"/><ellipse cx="150" cy="372" rx="34" ry="22"/>
+    <ellipse cx="240" cy="378" rx="34" ry="22"/><ellipse cx="330" cy="370" rx="34" ry="22"/>
+    <ellipse cx="420" cy="376" rx="34" ry="22"/><ellipse cx="510" cy="368" rx="34" ry="22"/>
+    <ellipse cx="100" cy="430" rx="40" ry="26"/><ellipse cx="210" cy="426" rx="40" ry="26"/>
+    <ellipse cx="320" cy="432" rx="40" ry="26"/><ellipse cx="430" cy="424" rx="40" ry="26"/>
+    <ellipse cx="540" cy="430" rx="40" ry="26"/>
+  </g>
+  <!-- cerezas de café -->
+  <g fill="#c4502a">
+    <circle cx="52" cy="376" r="4"/><circle cx="66" cy="384" r="4"/><circle cx="146" cy="368" r="4"/>
+    <circle cx="246" cy="374" r="4"/><circle cx="324" cy="366" r="4"/><circle cx="426" cy="372" r="4"/>
+    <circle cx="96" cy="426" r="5"/><circle cx="112" cy="434" r="5"/><circle cx="214" cy="420" r="5"/>
+    <circle cx="326" cy="428" r="5"/><circle cx="436" cy="420" r="5"/><circle cx="534" cy="426" r="5"/>
+  </g>
+</svg>

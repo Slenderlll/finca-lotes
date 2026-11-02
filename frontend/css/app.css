@@ -1,0 +1,490 @@
+/* ===== Tablero de inventario ===== */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 32px);
+}
+
+.saltar {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  z-index: 10;
+  padding: 10px 14px;
+  background: var(--blanco);
+  border-radius: var(--radio-chico);
+}
+
+.saltar:focus {
+  top: 8px;
+}
+
+main.contenedor {
+  padding-bottom: 72px;
+}
+
+/* ---------- Barra superior ---------- */
+.barra {
+  background: var(--blanco);
+  border-bottom: 1px solid var(--borde);
+}
+
+.barra-interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 68px;
+}
+
+.sesion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.sesion-nombre {
+  overflow: hidden;
+  font-size: 0.9375rem;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sesion-rol {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--cafe-medio);
+}
+
+/* ---------- Encabezado ---------- */
+.encabezado {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-block: 32px 24px;
+}
+
+.encabezado h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.encabezado-texto {
+  margin-top: 4px;
+  color: var(--cafe-medio);
+}
+
+/* ---------- Tarjetas de resumen ---------- */
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.tarjeta {
+  padding: 16px 18px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.tarjeta h2 {
+  font-family: var(--fuente-texto);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cafe-medio);
+}
+
+.tarjeta-valor {
+  margin-top: 6px;
+  font-family: var(--fuente-titulos);
+  font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.tarjeta-nota {
+  margin-top: 2px;
+  font-size: 0.8125rem;
+  color: var(--cafe-medio);
+}
+
+/* ---------- Filtros ---------- */
+.filtros {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+.filtros > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filtro-buscar {
+  flex: 1 1 240px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.chips legend {
+  float: left;
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+.chip {
+  min-height: 44px;
+  padding: 0 14px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.chip:hover {
+  background: var(--niebla);
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--hoja);
+  border-color: var(--hoja);
+  color: var(--blanco);
+  font-weight: 600;
+}
+
+.conteo {
+  min-height: 1.5em;
+  margin: 16px 0 10px;
+  font-size: 0.9375rem;
+  color: var(--cafe-medio);
+}
+
+/* ---------- Lista de lotes ---------- */
+.lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+}
+
+.lote {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  animation: aparecer 0.25s ease-out both;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.lote-encabezado {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.lote-codigo {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--cafe-medio);
+  font-variant-numeric: tabular-nums;
+}
+
+.lote-titulo {
+  margin-top: 2px;
+  font-size: 1.25rem;
+}
+
+.etiqueta {
+  flex: none;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.etiqueta-en-secado {
+  background: var(--ambar-suave);
+  color: var(--ambar);
+}
+
+.etiqueta-en-bodega {
+  background: var(--hoja-suave);
+  color: var(--hoja-oscura);
+}
+
+.etiqueta-vendido {
+  background: var(--niebla);
+  color: var(--cafe-medio);
+}
+
+.lote-datos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.lote-datos dt {
+  font-size: 0.8125rem;
+  color: var(--cafe-medio);
+}
+
+.lote-datos dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.lote-detalle,
+.lote-notas {
+  font-size: 0.9375rem;
+  color: var(--cafe-medio);
+}
+
+.lote-notas {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.lote-acciones {
+  display: flex;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--niebla);
+}
+
+.lote-acciones .boton {
+  flex: 1;
+  min-height: 40px;
+}
+
+.boton-eliminar {
+  color: var(--error);
+}
+
+.boton-eliminar:hover:not(:disabled) {
+  background: var(--error-suave);
+}
+
+/* Lugar de las tarjetas mientras llegan los datos */
+.lote-cargando {
+  height: 210px;
+  background: linear-gradient(100deg, var(--niebla) 40%, #f4eee1 50%, var(--niebla) 60%);
+  background-size: 200% 100%;
+  border-radius: var(--radio);
+  animation: brillar 1.3s linear infinite;
+}
+
+@keyframes brillar {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.estado-vacio {
+  grid-column: 1 / -1;
+  padding: 48px 24px;
+  background: var(--blanco);
+  border: 1px dashed #a89a82;
+  border-radius: var(--radio);
+  text-align: center;
+}
+
+.estado-vacio h2 {
+  font-size: 1.25rem;
+}
+
+.estado-vacio p {
+  margin: 6px 0 16px;
+  color: var(--cafe-medio);
+}
+
+.paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+  font-size: 0.9375rem;
+}
+
+/* ---------- Diálogos ---------- */
+.dialogo {
+  width: min(680px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 24px;
+  border: 0;
+  border-radius: var(--radio);
+  color: var(--cafe);
+  box-shadow: 0 24px 64px rgb(43 26 18 / 35%);
+}
+
+.dialogo::backdrop {
+  background: rgb(43 26 18 / 50%);
+}
+
+.dialogo-chico {
+  width: min(440px, calc(100vw - 24px));
+}
+
+.dialogo-chico h2 {
+  font-size: 1.375rem;
+  margin-bottom: 8px;
+}
+
+.dialogo-encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.dialogo-encabezado h2 {
+  font-size: 1.5rem;
+}
+
+.boton-cerrar {
+  width: 44px;
+  height: 44px;
+  margin: -8px -8px -8px 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radio-chico);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.boton-cerrar:hover {
+  background: var(--niebla);
+}
+
+.dialogo .aviso {
+  margin-bottom: 16px;
+}
+
+.rejilla-campos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.campo-ancho {
+  grid-column: 1 / -1;
+}
+
+.dialogo-pie {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* ---------- Avisos flotantes ---------- */
+.avisos-flotantes {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: min(440px, calc(100vw - 24px));
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.aviso-flotante {
+  display: flex;
+  padding: 11px 16px;
+  background: var(--cafe);
+  border-radius: var(--radio-chico);
+  color: var(--crema);
+  font-size: 0.9375rem;
+  animation: aparecer 0.2s ease-out both;
+}
+
+.aviso-flotante-error {
+  background: var(--error);
+  color: var(--blanco);
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 900px) {
+  .tarjetas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .rejilla-campos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .marca span {
+    font-size: 1rem;
+  }
+
+  #nuevo-lote {
+    width: 100%;
+  }
+
+  .filtros > div:not(.filtro-buscar) {
+    flex: 1 1 100%;
+  }
+
+  .dialogo {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 440px) {
+  .sesion-rol,
+  .barra .marca span {
+    display: none;
+  }
+
+  .rejilla-campos > .campo {
+    grid-column: 1 / -1;
+  }
+
+  .dialogo-pie .boton {
+    flex: 1;
+  }
+}

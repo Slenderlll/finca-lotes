@@ -1,0 +1,122 @@
+/* ===== Inicio de sesión: portada del cafetal y formulario a una sola columna ===== */
+.pagina-login {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.login-portada {
+  position: relative;
+  overflow: hidden;
+  background: var(--hoja-oscura);
+}
+
+.login-portada-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.login-portada blockquote {
+  position: absolute;
+  inset: auto 0 0;
+  margin: 0;
+  padding: 96px 48px 40px;
+  background: linear-gradient(to top, rgb(31 25 16 / 88%), transparent);
+  color: var(--crema);
+  font-family: var(--fuente-titulos);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.login-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: clamp(24px, 5vw, 56px);
+}
+
+.login-contenido {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.login-contenido h1 {
+  font-size: 2rem;
+}
+
+.login-subtitulo {
+  margin: 8px 0 24px;
+  color: var(--cafe-medio);
+}
+
+.login-contenido .aviso {
+  margin-bottom: 16px;
+}
+
+#formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.campo-password {
+  position: relative;
+}
+
+.campo-password input {
+  padding-right: 88px;
+}
+
+.boton-ver {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
+  padding: 0 12px;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--hoja);
+  cursor: pointer;
+}
+
+.boton-ver:hover {
+  background: var(--niebla);
+}
+
+.login-cambio {
+  margin-top: 16px;
+  font-size: 0.9375rem;
+  text-align: center;
+}
+
+.boton-enlace {
+  padding: 0;
+  background: none;
+  border: 0;
+  font-weight: 600;
+  color: var(--hoja);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .pagina-login {
+    grid-template-columns: 1fr;
+  }
+
+  .login-portada {
+    display: none;
+  }
+
+  .login-contenido {
+    margin: 0 auto;
+  }
+}

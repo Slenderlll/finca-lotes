@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Inventario de lotes de café de Finca Monte Nublado.">
+  <title>Inventario de lotes | Finca Monte Nublado</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="barra">
+    <div class="contenedor barra-interior">
+      <a class="marca" href="./">
+        <img src="img/logo.svg" alt="" width="40" height="40">
+        <span>Finca Monte Nublado</span>
+      </a>
+      <div class="sesion" id="sesion"></div>
+    </div>
+  </header>
+
+  <main class="contenedor" id="contenido">
+    <div class="encabezado">
+      <div>
+        <h1>Inventario de lotes</h1>
+        <p class="encabezado-texto" id="texto-rol"></p>
+      </div>
+      <button class="boton boton-primario" id="nuevo-lote" type="button" hidden>
+        <span aria-hidden="true">+</span> Nuevo lote
+      </button>
+    </div>
+
+    <section class="tarjetas" aria-label="Resumen del inventario">
+      <article class="tarjeta">
+        <h2>Café disponible</h2>
+        <p class="tarjeta-valor" id="r-kilos">—</p>
+        <p class="tarjeta-nota">sin contar lo vendido</p>
+      </article>
+      <article class="tarjeta">
+        <h2>Valor disponible</h2>
+        <p class="tarjeta-valor" id="r-valor">—</p>
+        <p class="tarjeta-nota">kilos × precio por kilo</p>
+      </article>
+      <article class="tarjeta">
+        <h2>Puntaje promedio</h2>
+        <p class="tarjeta-valor" id="r-puntaje">—</p>
+        <p class="tarjeta-nota">de los lotes con catación</p>
+      </article>
+      <article class="tarjeta">
+        <h2>Lotes registrados</h2>
+        <p class="tarjeta-valor" id="r-lotes">—</p>
+        <p class="tarjeta-nota">en todos los estados</p>
+      </article>
+    </section>
+
+    <section aria-label="Lista de lotes">
+      <form class="filtros" id="filtros" role="search">
+        <div class="filtro-buscar">
+          <label for="buscar">Buscar</label>
+          <input id="buscar" type="search" placeholder="Código, parcela o notas" autocomplete="off">
+        </div>
+        <div>
+          <label for="filtro-variedad">Variedad</label>
+          <select id="filtro-variedad">
+            <option value="">Todas</option>
+            <option>Typica</option>
+            <option>Bourbon</option>
+            <option>Geisha</option>
+            <option>Caturra</option>
+            <option>Marsellesa</option>
+          </select>
+        </div>
+        <fieldset class="chips" id="filtro-estado">
+          <legend>Estado</legend>
+          <button class="chip" type="button" data-estado="" aria-pressed="true">Todos</button>
+          <button class="chip" type="button" data-estado="En secado" aria-pressed="false">En secado</button>
+          <button class="chip" type="button" data-estado="En bodega" aria-pressed="false">En bodega</button>
+          <button class="chip" type="button" data-estado="Vendido" aria-pressed="false">Vendido</button>
+        </fieldset>
+      </form>
+
+      <p class="conteo" id="conteo" aria-live="polite"></p>
+
+      <div class="lista" id="lista" aria-busy="true"></div>
+
+      <nav class="paginacion" id="paginacion" aria-label="Paginación" hidden>
+        <button class="boton boton-secundario" id="pagina-anterior" type="button">Anterior</button>
+        <span id="pagina-actual"></span>
+        <button class="boton boton-secundario" id="pagina-siguiente" type="button">Siguiente</button>
+      </nav>
+    </section>
+  </main>
+
+  <!-- Crear y editar lote -->
+  <dialog class="dialogo" id="dialogo-lote" aria-labelledby="titulo-lote">
+    <form id="formulario-lote" method="dialog" novalidate>
+      <header class="dialogo-encabezado">
+        <h2 id="titulo-lote">Nuevo lote</h2>
+        <button class="boton-cerrar" type="button" data-cerrar aria-label="Cerrar">×</button>
+      </header>
+
+      <div class="aviso aviso-error" id="aviso-lote" role="alert" hidden></div>
+
+      <div class="rejilla-campos">
+        <div class="campo">
+          <label for="codigo">Código</label>
+          <input id="codigo" name="codigo" type="text" placeholder="MN-2026-009" autocomplete="off" required>
+          <p class="campo-error" data-error="codigo"></p>
+        </div>
+        <div class="campo">
+          <label for="parcela">Parcela</label>
+          <input id="parcela" name="parcela" type="text" maxlength="60" autocomplete="off" required>
+          <p class="campo-error" data-error="parcela"></p>
+        </div>
+        <div class="campo">
+          <label for="variedad">Variedad</label>
+          <select id="variedad" name="variedad" required>
+            <option value="">Elige una</option>
+            <option>Typica</option>
+            <option>Bourbon</option>
+            <option>Geisha</option>
+            <option>Caturra</option>
+            <option>Marsellesa</option>
+          </select>
+          <p class="campo-error" data-error="variedad"></p>
+        </div>
+        <div class="campo">
+          <label for="proceso">Proceso</label>
+          <select id="proceso" name="proceso" required>
+            <option value="">Elige uno</option>
+            <option>Lavado</option>
+            <option>Honey</option>
+            <option>Natural</option>
+          </select>
+          <p class="campo-error" data-error="proceso"></p>
+        </div>
+        <div class="campo">
+          <label for="estado">Estado</label>
+          <select id="estado" name="estado">
+            <option>En secado</option>
+            <option>En bodega</option>
+            <option>Vendido</option>
+          </select>
+          <p class="campo-error" data-error="estado"></p>
+        </div>
+        <div class="campo">
+          <label for="fechaCosecha">Fecha de cosecha</label>
+          <input id="fechaCosecha" name="fechaCosecha" type="date" required>
+          <p class="campo-error" data-error="fechaCosecha"></p>
+        </div>
+        <div class="campo">
+          <label for="kilos">Kilos</label>
+          <input id="kilos" name="kilos" type="number" min="0" step="any" inputmode="decimal" required>
+          <p class="campo-error" data-error="kilos"></p>
+        </div>
+        <div class="campo">
+          <label for="precioKg">Precio por kilo (MXN)</label>
+          <input id="precioKg" name="precioKg" type="number" min="0" step="any" inputmode="decimal" required>
+          <p class="campo-error" data-error="precioKg"></p>
+        </div>
+        <div class="campo">
+          <label for="puntaje">Puntaje de catación <span class="opcional">opcional</span></label>
+          <input id="puntaje" name="puntaje" type="number" min="0" max="100" step="0.25" inputmode="decimal">
+          <p class="campo-error" data-error="puntaje"></p>
+        </div>
+        <div class="campo campo-ancho">
+          <label for="notas">Notas <span class="opcional">opcional</span></label>
+          <textarea id="notas" name="notas" rows="2" maxlength="300"></textarea>
+          <p class="campo-error" data-error="notas"></p>
+        </div>
+      </div>
+
+      <footer class="dialogo-pie">
+        <button class="boton boton-secundario" type="button" data-cerrar>Cancelar</button>
+        <button class="boton boton-primario" id="guardar-lote" type="submit">Guardar lote</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Confirmar eliminación -->
+  <dialog class="dialogo dialogo-chico" id="dialogo-eliminar" aria-labelledby="titulo-eliminar">
+    <h2 id="titulo-eliminar">¿Eliminar este lote?</h2>
+    <p id="texto-eliminar"></p>
+    <footer class="dialogo-pie">
+      <button class="boton boton-secundario" type="button" data-cerrar>Cancelar</button>
+      <button class="boton boton-peligro" id="confirmar-eliminar" type="button">Eliminar lote</button>
+    </footer>
+  </dialog>
+
+  <div class="avisos-flotantes" id="avisos" role="status" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Logotipo Finca Monte Nublado">
+  <circle cx="32" cy="32" r="31" fill="#2f5d3a"/>
+  <path d="M8 44 L24 24 L32 34 L40 22 L56 44 Z" fill="#f7f1e6"/>
+  <ellipse cx="32" cy="46" rx="9" ry="12" transform="rotate(-20 32 46)" fill="#9c4221"/>
+  <path d="M28 36 C34 42 30 50 36 56" stroke="#f7f1e6" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+</svg>
